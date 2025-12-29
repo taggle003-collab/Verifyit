@@ -27,10 +27,13 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.SENDGRID_API_KEY
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'Missing SENDGRID_API_KEY' },
-        { status: 500 }
-      )
+      console.log("🎯 DEMO MODE: Email sending is in demo mode");
+      return NextResponse.json({
+        success: true,
+        message: "Demo Mode: Report would be sent to your email. Configure SendGrid in environment variables for real email delivery.",
+        token: `demo-${Date.now()}`,
+        demoMode: true
+      });
     }
 
     const item = getAnalysis(parsed.data.analysis_id)

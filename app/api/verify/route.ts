@@ -4,6 +4,7 @@ import { verifyRequestSchema } from '@/lib/analysis/types'
 import { analyzeLead } from '@/lib/analysis/scorer'
 import { scrapeAllPlatforms } from '@/lib/scraping/scraper'
 import { createAnalysis } from '@/lib/session-store'
+import { generateMockAnalysis } from '@/lib/mock-data'
 
 export const runtime = 'nodejs'
 
@@ -27,8 +28,16 @@ export async function POST(req: Request) {
       }
     }
 
-    const scraped = await scrapeAllPlatforms(lead, { timeoutMs: 60_000 })
-    const analysis = analyzeLead(lead, scraped)
+    let analysis;
+    const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!isConfigured) {
+      console.log("🎯 DEMO MODE: Using mock analysis data");
+      analysis = generateMockAnalysis(lead);
+    } else {
+      const scraped = await scrapeAllPlatforms(lead, { timeoutMs: 60_000 })
+      analysis = analyzeLead(lead, scraped)
+    }
 
     const { id, expiresAt } = createAnalysis({ lead, analysis })
 
@@ -38,6 +47,7 @@ export async function POST(req: Request) {
       analysis
     })
   } catch (err) {
+    console.error("Verification error:", err);
     const message = err instanceof Error ? err.message : 'Unknown error'
     return NextResponse.json({ error: 'Verification failed', message }, { status: 500 })
   }
