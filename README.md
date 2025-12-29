@@ -1,36 +1,58 @@
-# Verifyit — Standalone Lead Verification Tool
+# Lead Verification Tool
 
-A public, no-login lead verification tool built with Next.js (App Router), TypeScript, Tailwind, and shadcn/ui-style components.
+A professional, production-ready lead verification tool built with **Next.js 14**, **TypeScript**, and **Tailwind CSS**. It allows users to verify leads before pitching by analyzing real-time public signals.
 
-## Zero-data storage
-- No database persistence for lead data.
-- Analyses are kept only in an in-memory, TTL-based store to enable export/email.
-- Users can delete an analysis immediately from the results page.
-- Default TTL is 24 hours.
+## 🚀 Features
 
-> Note: In-memory storage is best-effort (suitable for demos). For production/serverless, replace with Redis (e.g. Upstash) using the same `lib/session-store.ts` interface.
+- **Real-time Signal Scraping**: Best-effort scraping of social platforms (LinkedIn, X, etc.)
+- **Scoring Algorithm**: Comprehensive analysis based on activity, growth, and hiring signals.
+- **Mock Data Mode**: Works perfectly without environment variables for demo purposes.
+- **Export Options**: Download reports as PDF or DOCX, or email them via SendGrid.
+- **Privacy First**: Zero-data storage. Analyses are stored in-memory and deleted after 24 hours or on demand.
+- **Responsive UI**: Modern, mobile-first design with dark mode support.
+- **No Login Required**: Immediate access for users.
 
-## Environment variables
-Copy `.env.example` to `.env.local`:
+## 🛠️ Tech Stack
 
-```bash
-cp .env.example .env.local
-```
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Icons**: Lucide React
+- **Export**: PDFKit (PDF) & docx (Word)
+- **Validation**: Zod
+- **Type Safety**: TypeScript
 
-Required:
-- `SENDGRID_API_KEY`
-- `NEXT_PUBLIC_TAGGLE_URL`
+## 🏁 Getting Started
 
-Optional:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
+### Local Development
 
-## Development
-```bash
-npm install
-npm run dev
-```
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Scraping note
-Scraping is implemented as best-effort, real-time HTTP scraping with graceful degradation. Some platforms may block automated access; when that happens, the tool returns low-confidence empty signals rather than failing.
+### Deployment
+
+See [DEPLOY.md](./DEPLOY.md) for a step-by-step guide on deploying to Vercel.
+
+## 🎯 Demo Mode
+
+The app automatically detects if environment variables are missing and enters **Demo Mode**. In this mode:
+- Mock analysis data is generated based on user input.
+- PDF and DOCX exports use the mock data.
+- Email sending shows a simulated success message.
+
+## 🔒 Privacy & Data
+
+- We do not persist any user data to a permanent database by default.
+- Analyses are stored in a temporary in-memory store.
+- Users can click "Delete Data" to immediately remove their analysis.
+- All temporary data is automatically cleared after 24 hours.
+
+## 🤝 Built by Taggle
+
+This tool is part of the Taggle ecosystem for lead generation and automation. Visit [taggle.ai](https://taggle.ai) for more information.
