@@ -66,7 +66,7 @@ export function ExportButtons({ analysisId }: { analysisId: string }) {
           <DialogHeader>
             <DialogTitle>Email this report</DialogTitle>
             <DialogDescription>
-              We'll generate a PDF and deliver it via SendGrid. The analysis will expire automatically within 24 hours.
+              We will generate a PDF and deliver it via SendGrid. The analysis will expire automatically within 24 hours.
             </DialogDescription>
           </DialogHeader>
 

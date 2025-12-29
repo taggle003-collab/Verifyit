@@ -21,7 +21,7 @@ export async function GET(
     company: item.lead.company
   })
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'Content-Disposition': `attachment; filename="lead-verification-${id}.docx"`,
